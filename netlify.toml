@@ -1,6 +1,12 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  environment = { NODE_VERSION = "18" }
+
+[build.environment]
+  VITE_AZURE_CLIENT_ID = "d6aa1d05-2e2e-4c52-9c21-fe0f7d"
+  VITE_AZURE_TENANT_ID = "common"
+  VITE_REDIRECT_URI = "https://focus-friend.netlify.app"
 
 [[redirects]]
   from = "/*"
