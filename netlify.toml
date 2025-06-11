@@ -1,19 +1,19 @@
 [build]
   command = "rm -rf node_modules package-lock.json && npm install --legacy-peer-deps && npm install @rollup/rollup-linux-x64-gnu && npm run build"
   publish = "dist"
-  environment = { NODE_VERSION = "18" }
 
-[build.environment]
-  VITE_AZURE_CLIENT_ID = ""
-  VITE_AZURE_TENANT_ID = ""
-  VITE_REDIRECT_URI = ""
-  VITE_FIREBASE_API_KEY = ""
-  VITE_FIREBASE_AUTH_DOMAIN = ""
-  VITE_FIREBASE_PROJECT_ID = ""
-  VITE_FIREBASE_STORAGE_BUCKET = ""
-  VITE_FIREBASE_MESSAGING_SENDER_ID = ""
-  VITE_FIREBASE_APP_ID = ""
-  VITE_FIREBASE_MEASUREMENT_ID = ""
+  [build.environment]
+    NODE_VERSION = "18"
+    VITE_AZURE_CLIENT_ID = ""
+    VITE_AZURE_TENANT_ID = ""
+    VITE_REDIRECT_URI = ""
+    VITE_FIREBASE_API_KEY = ""
+    VITE_FIREBASE_AUTH_DOMAIN = ""
+    VITE_FIREBASE_PROJECT_ID = ""
+    VITE_FIREBASE_STORAGE_BUCKET = ""
+    VITE_FIREBASE_MESSAGING_SENDER_ID = ""
+    VITE_FIREBASE_APP_ID = ""
+    VITE_FIREBASE_MEASUREMENT_ID = ""
 
 [[redirects]]
   from = "/*"
