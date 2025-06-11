@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ScheduleItem } from '../types';
 import { Client } from '@microsoft/microsoft-graph-client';
 import { AuthCodeMSALBrowserAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser';
-import { PublicClientApplication } from '@azure/msal-browser';
+import { PublicClientApplication, InteractionType } from '@azure/msal-browser';
 
 interface ScheduleProps {
   schedule: ScheduleItem[];
@@ -55,7 +55,8 @@ const Schedule: React.FC<ScheduleProps> = ({
     try {
       const authProvider = new AuthCodeMSALBrowserAuthenticationProvider(msalInstance, {
         account: msalInstance.getAllAccounts()[0],
-        scopes: ['Calendars.Read']
+        scopes: ['Calendars.Read'],
+        interactionType: InteractionType.Popup
       });
 
       const client = Client.initWithMiddleware({
