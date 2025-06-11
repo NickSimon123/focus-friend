@@ -1,19 +1,19 @@
 [build]
-  command = "npm install --legacy-peer-deps && npm run build"
+  command = "rm -rf node_modules package-lock.json && npm install --legacy-peer-deps && npm install @rollup/rollup-linux-x64-gnu && npm run build"
   publish = "dist"
+  environment = { NODE_VERSION = "18" }
 
 [build.environment]
-  NODE_VERSION = "18"
-  VITE_AZURE_CLIENT_ID = "d6aa1d05-2e2e-4c52-9c21-fe0f7d"
-  VITE_AZURE_TENANT_ID = "common"
-  VITE_REDIRECT_URI = "https://focus-friend.netlify.app"
-  VITE_FIREBASE_API_KEY = "AIzaSyCS1oLuwwzwUVInJ9l_yIt40_gryDpK2ss"
-  VITE_FIREBASE_AUTH_DOMAIN = "focus-friend-536ad.firebaseapp.com"
-  VITE_FIREBASE_PROJECT_ID = "focus-friend-536ad"
-  VITE_FIREBASE_STORAGE_BUCKET = "focus-friend-536ad.firebasestorage.app"
-  VITE_FIREBASE_MESSAGING_SENDER_ID = "975734753164"
-  VITE_FIREBASE_APP_ID = "1:975734753164:web:a60d3122a16b9c29dab8a9"
-  VITE_FIREBASE_MEASUREMENT_ID = "G-JWXXYT2M3K"
+  VITE_AZURE_CLIENT_ID = ""
+  VITE_AZURE_TENANT_ID = ""
+  VITE_REDIRECT_URI = ""
+  VITE_FIREBASE_API_KEY = ""
+  VITE_FIREBASE_AUTH_DOMAIN = ""
+  VITE_FIREBASE_PROJECT_ID = ""
+  VITE_FIREBASE_STORAGE_BUCKET = ""
+  VITE_FIREBASE_MESSAGING_SENDER_ID = ""
+  VITE_FIREBASE_APP_ID = ""
+  VITE_FIREBASE_MEASUREMENT_ID = ""
 
 [[redirects]]
   from = "/*"
