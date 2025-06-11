@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { PublicClientApplication, AccountInfo } from '@azure/msal-browser';
 import GamePage from './GamePage';
 import FocusTimer from './FocusTimer';
 import MoodTracker from './MoodTracker';
 import Schedule from './Schedule';
 import RewardSystem from './RewardSystem';
 import { ScheduleItem, MoodEntry, RewardStats, FocusSession, Activity } from '../types';
+import type { User } from 'firebase/auth';
 
 interface StudentDashboardProps {
-  msalInstance: PublicClientApplication;
+  user: User;
 }
 
-const StudentDashboard: React.FC<StudentDashboardProps> = ({ msalInstance }) => {
+const StudentDashboard: React.FC<StudentDashboardProps> = ({ user }) => {
   const [schedule, setSchedule] = useState<ScheduleItem[]>([]);
   const [focusMode, setFocusMode] = useState(false);
   const [newScheduleItem, setNewScheduleItem] = useState('');
@@ -201,7 +201,6 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({ msalInstance }) => 
               onAddItem={handleAddScheduleItem}
               onDeleteItem={handleDeleteScheduleItem}
               onItemClick={handleScheduleItemClick}
-              msalInstance={msalInstance}
             />
             <FocusTimer
               onTimerComplete={handleTimerComplete}
