@@ -8,7 +8,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithPhoneNumber,
   RecaptchaVerifier,
-  signOut,
+  signOut as firebaseSignOut,
   onAuthStateChanged,
   User
 } from 'firebase/auth';
@@ -22,8 +22,20 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+let auth: ReturnType<typeof getAuth>;
+
+export const initializeFirebase = () => {
+  const app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  return auth;
+};
+
+export const getFirebaseAuth = () => {
+  if (!auth) {
+    auth = getAuth();
+  }
+  return auth;
+};
 
 // Initialize providers
 const googleProvider = new GoogleAuthProvider();
@@ -42,17 +54,17 @@ appleProvider.addScope('name');
 
 export const signInWithGoogle = async () => {
   try {
-    const result = await signInWithPopup(auth, googleProvider);
+    const result = await signInWithPopup(getFirebaseAuth(), googleProvider);
     return result.user;
   } catch (error) {
-    console.error('Google sign in error:', error);
+    console.error('Error signing in with Google:', error);
     throw error;
   }
 };
 
 export const signInWithMicrosoft = async () => {
   try {
-    const result = await signInWithPopup(auth, microsoftProvider);
+    const result = await signInWithPopup(getFirebaseAuth(), microsoftProvider);
     return result.user;
   } catch (error) {
     console.error('Microsoft sign in error:', error);
@@ -62,7 +74,7 @@ export const signInWithMicrosoft = async () => {
 
 export const signInWithApple = async () => {
   try {
-    const result = await signInWithPopup(auth, appleProvider);
+    const result = await signInWithPopup(getFirebaseAuth(), appleProvider);
     return result.user;
   } catch (error) {
     console.error('Apple sign in error:', error);
@@ -72,34 +84,34 @@ export const signInWithApple = async () => {
 
 export const signInWithEmail = async (email: string, password: string) => {
   try {
-    const result = await signInWithEmailAndPassword(auth, email, password);
+    const result = await signInWithEmailAndPassword(getFirebaseAuth(), email, password);
     return result.user;
   } catch (error) {
-    console.error('Email sign in error:', error);
+    console.error('Error signing in with email:', error);
     throw error;
   }
 };
 
 export const signUpWithEmail = async (email: string, password: string) => {
   try {
-    const result = await createUserWithEmailAndPassword(auth, email, password);
+    const result = await createUserWithEmailAndPassword(getFirebaseAuth(), email, password);
     return result.user;
   } catch (error) {
-    console.error('Email sign up error:', error);
+    console.error('Error signing up with email:', error);
     throw error;
   }
 };
 
 export const signInWithPhone = async (phoneNumber: string) => {
   try {
-    const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+    const recaptchaVerifier = new RecaptchaVerifier(getFirebaseAuth(), 'recaptcha-container', {
       size: 'normal',
       callback: () => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
       }
     });
 
-    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+    const confirmationResult = await signInWithPhoneNumber(getFirebaseAuth(), phoneNumber, recaptchaVerifier);
     return confirmationResult;
   } catch (error) {
     console.error('Phone sign in error:', error);
@@ -117,17 +129,15 @@ export const confirmPhoneCode = async (confirmationResult: any, code: string) =>
   }
 };
 
-export const logout = async () => {
+export const signOut = async () => {
   try {
-    await signOut(auth);
+    await firebaseSignOut(getFirebaseAuth());
   } catch (error) {
-    console.error('Logout error:', error);
+    console.error('Error signing out:', error);
     throw error;
   }
 };
 
 export const onAuthStateChange = (callback: (user: User | null) => void) => {
-  return onAuthStateChanged(auth, callback);
-};
-
-export { auth }; 
+  return onAuthStateChanged(getFirebaseAuth(), callback);
+}; 

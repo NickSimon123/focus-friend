@@ -1,31 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { PublicClientApplication, EventType, EventMessage, AuthenticationResult } from '@azure/msal-browser';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import StudentDashboard from './components/StudentDashboard';
+import { PublicClientApplication, EventType, EventMessage, AuthenticationResult } from '@azure/msal-browser';
+import { MsalProvider, useMsal } from '@azure/msal-react';
 import TeacherDashboard from './components/TeacherDashboard';
+import StudentDashboard from './components/StudentDashboard';
 import SignInBar from './components/SignInBar';
-import { auth } from './services/auth';
-import { onAuthStateChanged } from 'firebase/auth';
+import { initializeFirebase } from './services/auth';
+
+// Initialize Firebase
+initializeFirebase();
 
 // MSAL configuration
 const msalConfig = {
   auth: {
     clientId: import.meta.env.VITE_AZURE_CLIENT_ID || '',
-    authority: `https://login.microsoftonline.com/${import.meta.env.VITE_AZURE_TENANT_ID}`,
-    redirectUri: import.meta.env.VITE_REDIRECT_URI || 'http://localhost:5173',
+    authority: `https://login.microsoftonline.com/${import.meta.env.VITE_AZURE_TENANT_ID || ''}`,
+    redirectUri: import.meta.env.VITE_AZURE_REDIRECT_URI || window.location.origin,
   },
   cache: {
     cacheLocation: 'sessionStorage',
     storeAuthStateInCookie: false,
-  },
+  }
 };
 
+// Create MSAL instance
 const msalInstance = new PublicClientApplication(msalConfig);
 
-// Default to using the first account if no active account is set
-if (!msalInstance.getActiveAccount() && msalInstance.getAllAccounts().length > 0) {
-  msalInstance.setActiveAccount(msalInstance.getAllAccounts()[0]);
-}
+// Initialize MSAL
+const initializeMsal = async () => {
+  try {
+    await msalInstance.initialize();
+    // Default to using the first account if no active account is set
+    if (!msalInstance.getActiveAccount() && msalInstance.getAllAccounts().length > 0) {
+      msalInstance.setActiveAccount(msalInstance.getAllAccounts()[0]);
+    }
+    return true;
+  } catch (error) {
+    console.error('Error initializing MSAL:', error);
+    return false;
+  }
+};
 
 // Optional - This will update account state if a user signs in from another tab/window
 msalInstance.addEventCallback((event: EventMessage) => {
@@ -36,61 +50,30 @@ msalInstance.addEventCallback((event: EventMessage) => {
   }
 });
 
-interface User {
-  id: string;
-  email: string;
-  role: 'teacher' | 'student';
-}
-
-function App() {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+// App content component that uses MSAL hooks
+const AppContent: React.FC = () => {
+  const { accounts, instance } = useMsal();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userRole, setUserRole] = useState<'teacher' | 'student' | null>(null);
+  const [isMsalInitialized, setIsMsalInitialized] = useState(false);
 
   useEffect(() => {
-    // Check for existing session
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (firebaseUser) {
-        // Check if user role is stored in localStorage
-        const storedRole = localStorage.getItem('userRole');
-        if (storedRole) {
-          setUser({
-            id: firebaseUser.uid,
-            email: firebaseUser.email || '',
-            role: storedRole as 'teacher' | 'student'
-          });
-        }
-      } else {
-        setUser(null);
+    const init = async () => {
+      const initialized = await initializeMsal();
+      setIsMsalInitialized(initialized);
+      
+      if (accounts.length > 0) {
+        setIsAuthenticated(true);
+        // For demo purposes, we'll set the role based on the username
+        // In a real app, you would get this from your backend
+        setUserRole(accounts[0].username.includes('teacher') ? 'teacher' : 'student');
       }
-      setLoading(false);
-    });
+    };
 
-    return () => unsubscribe();
-  }, []);
+    init();
+  }, [accounts]);
 
-  const handleSignIn = (userData: any, role: 'teacher' | 'student') => {
-    // Store user role in localStorage
-    localStorage.setItem('userRole', role);
-    
-    setUser({
-      id: userData.uid || userData.localAccountId,
-      email: userData.email || userData.username,
-      role
-    });
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await auth.signOut();
-      await msalInstance.logoutPopup();
-      localStorage.removeItem('userRole');
-      setUser(null);
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
-  };
-
-  if (loading) {
+  if (!isMsalInitialized) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -101,50 +84,60 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
-        {user && (
-          <nav className="bg-white shadow-sm">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between h-16">
-                <div className="flex items-center">
-                  <span className="text-lg font-semibold text-gray-900">Focus Friend</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-sm text-gray-500 mr-4">
-                    {user.email} ({user.role})
-                  </span>
-                  <button
-                    onClick={handleSignOut}
-                    className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
-                  >
-                    Sign Out
-                  </button>
-                </div>
-              </div>
-            </div>
-          </nav>
-        )}
-
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {!user ? (
-            <SignInBar msalInstance={msalInstance} onSignIn={handleSignIn} />
-          ) : (
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  user.role === 'teacher' ? (
-                    <TeacherDashboard msalInstance={msalInstance} />
+        <SignInBar 
+          isAuthenticated={isAuthenticated}
+          onSignIn={() => setIsAuthenticated(true)}
+          onSignOut={() => {
+            setIsAuthenticated(false);
+            setUserRole(null);
+          }}
+          msalInstance={instance}
+        />
+        
+        <main className="container mx-auto px-4 py-8">
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                isAuthenticated ? (
+                  userRole === 'teacher' ? (
+                    <TeacherDashboard msalInstance={instance} />
                   ) : (
-                    <StudentDashboard msalInstance={msalInstance} />
+                    <StudentDashboard msalInstance={instance} />
                   )
-                }
-              />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          )}
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            <Route 
+              path="/login" 
+              element={
+                isAuthenticated ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
+                    <h1 className="text-2xl font-bold text-center mb-6">Welcome to Focus Friend</h1>
+                    <p className="text-center text-gray-600 mb-8">
+                      Please sign in to continue
+                    </p>
+                  </div>
+                )
+              } 
+            />
+          </Routes>
         </main>
       </div>
     </Router>
+  );
+};
+
+// Main App component that provides MSAL context
+function App() {
+  return (
+    <MsalProvider instance={msalInstance}>
+      <AppContent />
+    </MsalProvider>
   );
 }
 
