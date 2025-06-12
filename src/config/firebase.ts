@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, setPersistence, browserLocalPersistence, OAuthProvider } from 'firebase/auth';
+import { getAuth, setPersistence, browserLocalPersistence, OAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import { getAnalytics } from 'firebase/analytics';
 
 const firebaseConfig = {
@@ -22,7 +22,15 @@ const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
 const auth = getAuth(app);
 
 // Configure auth persistence
-setPersistence(auth, browserLocalPersistence);
+setPersistence(auth, browserLocalPersistence).catch((error) => {
+  console.error("Error setting auth persistence:", error);
+});
+
+// Initialize Google provider
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
 
 // Initialize Microsoft provider
 const microsoftProvider = new OAuthProvider('microsoft.com');
@@ -31,6 +39,6 @@ microsoftProvider.setCustomParameters({
   tenant: 'common'
 });
 
-export { auth, microsoftProvider };
+export { auth, googleProvider, microsoftProvider };
 
 export default app; 
