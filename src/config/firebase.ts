@@ -26,10 +26,12 @@ setPersistence(auth, browserLocalPersistence).catch((error) => {
   console.error("Error setting auth persistence:", error);
 });
 
-// Initialize Google provider
+// Initialize Google provider with specific scopes
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
-  prompt: 'select_account'
+  prompt: 'select_account',
+  // Add any additional scopes you need
+  scope: 'email profile'
 });
 
 // Initialize Microsoft provider
@@ -37,6 +39,15 @@ const microsoftProvider = new OAuthProvider('microsoft.com');
 microsoftProvider.setCustomParameters({
   prompt: 'select_account',
   tenant: 'common'
+});
+
+// Log the current auth state
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    console.log('User is signed in:', user.email);
+  } else {
+    console.log('No user is signed in');
+  }
 });
 
 export { auth, googleProvider, microsoftProvider };
