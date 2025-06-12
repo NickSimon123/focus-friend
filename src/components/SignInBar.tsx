@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { signInWithGoogle, signInWithEmail, signUpWithEmail } from '../services/auth';
+import { signInWithGoogle, signInWithEmail, signUpWithEmail, signInWithMicrosoft } from '../services/auth';
 import type { User } from 'firebase/auth';
 
 interface SignInBarProps {
@@ -14,20 +14,38 @@ export const SignInBar: React.FC<SignInBarProps> = ({ onSignIn }) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState('');
   const [role, setRole] = useState<UserRole>('student');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    setError('');
     try {
       const user = await signInWithGoogle();
       onSignIn(user);
-    } catch (error) {
-      setError('Failed to sign in with Google');
-      console.error(error);
+    } catch (error: any) {
+      setError(error.message || 'Failed to sign in with Google');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleMicrosoftSignIn = async () => {
+    setIsLoading(true);
+    setError('');
+    try {
+      const user = await signInWithMicrosoft();
+      onSignIn(user);
+    } catch (error: any) {
+      setError(error.message || 'Failed to sign in with Microsoft');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
     
     try {
       const user = isSignUp 
@@ -36,6 +54,8 @@ export const SignInBar: React.FC<SignInBarProps> = ({ onSignIn }) => {
       onSignIn(user);
     } catch (error: any) {
       setError(error.message || 'Failed to sign in');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -102,6 +122,7 @@ export const SignInBar: React.FC<SignInBarProps> = ({ onSignIn }) => {
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
               />
             </div>
             <div>
@@ -118,6 +139,7 @@ export const SignInBar: React.FC<SignInBarProps> = ({ onSignIn }) => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
               />
             </div>
           </div>
@@ -125,9 +147,16 @@ export const SignInBar: React.FC<SignInBarProps> = ({ onSignIn }) => {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+              disabled={isLoading}
+              className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors ${
+                isLoading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
-              {isSignUp ? 'Create account' : 'Sign in'}
+              {isLoading ? (
+                <div className="w-5 h-5 border-t-2 border-b-2 border-white rounded-full animate-spin"></div>
+              ) : (
+                isSignUp ? 'Create account' : 'Sign in'
+              )}
             </button>
           </div>
         </form>
@@ -142,17 +171,30 @@ export const SignInBar: React.FC<SignInBarProps> = ({ onSignIn }) => {
             </div>
           </div>
 
-          <div className="mt-6">
+          <div className="mt-6 grid grid-cols-2 gap-3">
             <button
               onClick={handleGoogleSignIn}
-              className="w-full flex justify-center items-center py-3 px-4 border border-gray-200 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+              disabled={isLoading}
+              className="w-full flex justify-center items-center py-3 px-4 border border-gray-200 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <img
                 className="h-5 w-5 mr-2"
                 src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                 alt="Google logo"
               />
-              Sign in with Google
+              Google
+            </button>
+            <button
+              onClick={handleMicrosoftSignIn}
+              disabled={isLoading}
+              className="w-full flex justify-center items-center py-3 px-4 border border-gray-200 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <img
+                className="h-5 w-5 mr-2"
+                src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg"
+                alt="Microsoft logo"
+              />
+              Microsoft
             </button>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
+import { getAuth, setPersistence, browserLocalPersistence, OAuthProvider } from 'firebase/auth';
 import { getAnalytics } from 'firebase/analytics';
 
 const firebaseConfig = {
@@ -24,6 +24,13 @@ const auth = getAuth(app);
 // Configure auth persistence
 setPersistence(auth, browserLocalPersistence);
 
-export { auth, analytics };
+// Initialize Microsoft provider
+const microsoftProvider = new OAuthProvider('microsoft.com');
+microsoftProvider.setCustomParameters({
+  prompt: 'select_account',
+  tenant: 'common'
+});
+
+export { auth, microsoftProvider };
 
 export default app; 
