@@ -4,7 +4,7 @@ import { signInWithGoogle, signInWithEmail, signUpWithEmail, signOut, onAuthStat
 
 // Color themes for gradients
 const gradientThemes = {
-  default: 'from-slate-50 to-blue-50'
+  default: 'from-slate-50 via-blue-50 to-slate-100'
 };
 
 // Microsoft Outlook integration types
@@ -95,13 +95,13 @@ const AuthComponent: React.FC<{ onAuthSuccess: (user: User) => void }> = ({ onAu
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
-      <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 w-full max-w-md border border-white/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 flex items-center justify-center p-4">
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 w-full max-w-md border border-slate-200/50">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
             <span className="text-2xl text-white">🎯</span>
           </div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">FocusFriend</h1>
+          <h1 className="text-3xl font-bold text-slate-800 mb-2">FocusFriend</h1>
           <p className="text-slate-600">Your productivity companion</p>
         </div>
 
@@ -111,7 +111,7 @@ const AuthComponent: React.FC<{ onAuthSuccess: (user: User) => void }> = ({ onAu
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-4 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 backdrop-blur-sm"
+              className="w-full px-4 py-4 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/70 backdrop-blur-sm"
               placeholder="Enter your email"
               required
             />
@@ -122,7 +122,7 @@ const AuthComponent: React.FC<{ onAuthSuccess: (user: User) => void }> = ({ onAu
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-4 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 backdrop-blur-sm"
+              className="w-full px-4 py-4 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/70 backdrop-blur-sm"
               placeholder="Enter your password"
               required
             />
@@ -137,7 +137,7 @@ const AuthComponent: React.FC<{ onAuthSuccess: (user: User) => void }> = ({ onAu
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 rounded-2xl font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 transform hover:scale-[1.02]"
+            className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 rounded-2xl font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-200 disabled:opacity-50 transform hover:scale-[1.02]"
           >
             {loading ? 'Please wait...' : (isSignUp ? 'Sign Up' : 'Sign In')}
           </button>
@@ -257,27 +257,27 @@ const FocusGame: React.FC<{ points: number; onGameEnd: (score: number) => void; 
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 flex flex-col items-center justify-center p-6">
       <div className="text-center mb-8">
-        <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-6">Focus Clicker</h1>
+        <h1 className="text-5xl font-bold text-slate-800 mb-6">Focus Clicker</h1>
         <div className="grid grid-cols-3 gap-6 mb-8">
-          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-slate-200/50">
             <div className="text-sm text-slate-600 font-medium">Score</div>
-            <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">{score}</div>
+            <div className="text-3xl font-bold text-blue-600">{score}</div>
           </div>
-          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-slate-200/50">
             <div className="text-sm text-slate-600 font-medium">Time Left</div>
-            <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">{timeLeft}s</div>
+            <div className="text-3xl font-bold text-blue-600">{timeLeft}s</div>
           </div>
-          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-slate-200/50">
             <div className="text-sm text-slate-600 font-medium">High Score</div>
-            <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">{highScore}</div>
+            <div className="text-3xl font-bold text-blue-600">{highScore}</div>
           </div>
         </div>
         {!gameActive && (
           <button
             onClick={startGame}
-            className="px-10 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 text-white text-lg font-medium hover:from-purple-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
+            className="px-10 py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-blue-600 text-white text-lg font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
           >
             Start Game
           </button>
@@ -286,20 +286,20 @@ const FocusGame: React.FC<{ points: number; onGameEnd: (score: number) => void; 
 
       {gameActive && (
         <div
-          className="relative w-full max-w-4xl h-[70vh] bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden cursor-crosshair game-container border border-white/20"
+          className="relative w-full max-w-4xl h-[70vh] bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden cursor-crosshair game-container border border-slate-200/50"
           onClick={handleContainerClick}
         >
           <div
-            className="absolute w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 hover:scale-110 shadow-lg"
+            className="absolute w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 hover:scale-110 shadow-lg"
             style={{
               left: targetPosition.x,
               top: targetPosition.y,
-              boxShadow: '0 0 30px rgba(139, 92, 246, 0.6)'
+              boxShadow: '0 0 30px rgba(59, 130, 246, 0.6)'
             }}
           />
           {showPoints && (
             <div
-              className="absolute text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent animate-bounce"
+              className="absolute text-2xl font-bold text-blue-600 animate-bounce"
               style={{
                 left: clickPosition.x,
                 top: clickPosition.y - 30,
@@ -315,7 +315,7 @@ const FocusGame: React.FC<{ points: number; onGameEnd: (score: number) => void; 
       <div className="mt-8 text-center max-w-md">
         <h2 className="text-xl font-semibold text-slate-700 mb-3">How to Play</h2>
         <p className="text-slate-600 leading-relaxed">
-          Click the glowing target as many times as you can in 30 seconds! 
+          Click the blue target as many times as you can in 30 seconds! 
           Build up your combo to increase your multiplier and score more points.
         </p>
       </div>
@@ -325,7 +325,7 @@ const FocusGame: React.FC<{ points: number; onGameEnd: (score: number) => void; 
 
 // Overview Card Component
 const OverviewCard: React.FC<{ title: string; children: React.ReactNode; className?: string }> = ({ title, children, className = "" }) => (
-  <div className={`bg-white/70 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20 ${className}`}>
+  <div className={`bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-slate-200/50 ${className}`}>
     <h3 className="text-lg font-semibold text-slate-700 mb-4">{title}</h3>
     {children}
   </div>
@@ -333,7 +333,7 @@ const OverviewCard: React.FC<{ title: string; children: React.ReactNode; classNa
 
 // Stat Card Component
 const StatCard: React.FC<{ icon: string; label: string; value: string | number; color: string }> = ({ icon, label, value, color }) => (
-  <div className={`bg-gradient-to-br ${color} rounded-2xl p-4 text-white`}>
+  <div className={`bg-gradient-to-br ${color} rounded-2xl p-4 text-white shadow-sm`}>
     <div className="flex items-center gap-3 mb-2">
       <span className="text-2xl">{icon}</span>
       <span className="text-sm font-medium opacity-90">{label}</span>
@@ -498,12 +498,12 @@ function FocusFriendApp() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center animate-pulse">
+          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center animate-pulse">
             <span className="text-2xl text-white">🎯</span>
           </div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">Loading FocusFriend...</h1>
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">Loading FocusFriend...</h1>
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
         </div>
       </div>
@@ -517,20 +517,20 @@ function FocusFriendApp() {
   return (
     <div className={`min-h-screen bg-gradient-to-br ${gradientThemes.default}`}>
       {/* Minimalist Header */}
-      <div className="bg-white/70 backdrop-blur-sm border-b border-white/20">
+      <div className="bg-white/80 backdrop-blur-sm border-b border-slate-200/50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                 <span className="text-lg text-white">🎯</span>
               </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">FocusFriend</h1>
+              <h1 className="text-2xl font-bold text-slate-800">FocusFriend</h1>
             </div>
             
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setCurrentView(currentView === 'main' ? 'game' : 'main')}
-                className="px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:from-purple-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center gap-2 font-medium"
+                className="px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center gap-2 font-medium"
               >
                 <span className="text-lg">{currentView === 'main' ? '🎮' : '📊'}</span>
                 <span>{currentView === 'main' ? 'Play Game' : 'Dashboard'}</span>
@@ -559,10 +559,10 @@ function FocusFriendApp() {
             <div className="lg:col-span-8">
               <OverviewCard title="Today's Overview" className="mb-6">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <StatCard icon="🎯" label="Focus Points" value={rewardStats.focusPoints} color="from-blue-500 to-cyan-500" />
-                  <StatCard icon="🎮" label="Game Points" value={rewardStats.gamePoints} color="from-purple-500 to-pink-500" />
-                  <StatCard icon="😊" label="Mood Points" value={rewardStats.moodPoints} color="from-green-500 to-emerald-500" />
-                  <StatCard icon="⚡" label="Total Points" value={rewardStats.totalPoints} color="from-orange-500 to-red-500" />
+                  <StatCard icon="🎯" label="Focus Points" value={rewardStats.focusPoints} color="from-blue-500 to-blue-600" />
+                  <StatCard icon="🎮" label="Game Points" value={rewardStats.gamePoints} color="from-slate-500 to-slate-600" />
+                  <StatCard icon="😊" label="Mood Points" value={rewardStats.moodPoints} color="from-emerald-500 to-emerald-600" />
+                  <StatCard icon="⚡" label="Total Points" value={rewardStats.totalPoints} color="from-indigo-500 to-indigo-600" />
                 </div>
               </OverviewCard>
 
@@ -570,7 +570,7 @@ function FocusFriendApp() {
               <OverviewCard title="Today's Schedule">
                 {!isOutlookConnected ? (
                   <div className="text-center py-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                    <div className="w-16 h-16 bg-slate-100 rounded-2xl mx-auto mb-4 flex items-center justify-center">
                       <span className="text-2xl">📅</span>
                     </div>
                     <h3 className="text-lg font-semibold text-slate-700 mb-2">Connect Your Calendar</h3>
@@ -578,7 +578,7 @@ function FocusFriendApp() {
                     <button
                       onClick={connectToOutlook}
                       disabled={isConnecting}
-                      className="px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 font-medium"
+                      className="px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 transition-all duration-200 disabled:opacity-50 font-medium"
                     >
                       {isConnecting ? 'Connecting...' : 'Connect to Outlook'}
                     </button>
@@ -589,9 +589,9 @@ function FocusFriendApp() {
                 ) : (
                   <div className="space-y-3">
                     {nextEvent && (
-                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 border border-blue-100">
+                      <div className="bg-blue-50 rounded-2xl p-4 border border-blue-100">
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                          <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
                           <span className="text-sm font-medium text-blue-700">Next Up</span>
                         </div>
                         <h4 className="font-semibold text-slate-800">{nextEvent.title}</h4>
@@ -626,7 +626,7 @@ function FocusFriendApp() {
               {/* Focus Timer */}
               <OverviewCard title="Focus Timer">
                 <div className="text-center">
-                  <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">
+                  <div className="text-4xl font-bold text-blue-600 mb-3">
                     {String(timerMinutes).padStart(2, '0')}:{String(timerSeconds).padStart(2, '0')}
                   </div>
                   <div className="text-sm text-slate-600 mb-4">
@@ -637,8 +637,8 @@ function FocusFriendApp() {
                       onClick={() => setIsTimerActive(!isTimerActive)}
                       className={`px-4 py-2 rounded-xl text-white transition-all duration-200 font-medium ${
                         isTimerActive 
-                          ? 'bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600' 
-                          : 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600'
+                          ? 'bg-slate-500 hover:bg-slate-600' 
+                          : 'bg-emerald-500 hover:bg-emerald-600'
                       }`}
                     >
                       {isTimerActive ? 'Pause' : 'Start'}
@@ -660,7 +660,7 @@ function FocusFriendApp() {
               {/* Quick Actions */}
               <OverviewCard title="Quick Actions">
                 <div className="space-y-3">
-                  <button className="w-full p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-purple-50 text-left hover:from-blue-100 hover:to-purple-100 transition-all duration-200 border border-blue-100 group">
+                  <button className="w-full p-4 rounded-2xl bg-blue-50 text-left hover:bg-blue-100 transition-all duration-200 border border-blue-100 group">
                     <div className="flex items-center gap-3">
                       <span className="text-xl">📊</span>
                       <div>
@@ -670,21 +670,21 @@ function FocusFriendApp() {
                     </div>
                   </button>
                   
-                  <button className="w-full p-4 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 text-left hover:from-green-100 hover:to-emerald-100 transition-all duration-200 border border-green-100 group">
+                  <button className="w-full p-4 rounded-2xl bg-emerald-50 text-left hover:bg-emerald-100 transition-all duration-200 border border-emerald-100 group">
                     <div className="flex items-center gap-3">
                       <span className="text-xl">😊</span>
                       <div>
-                        <div className="font-medium text-slate-700 group-hover:text-green-700">Log Mood</div>
+                        <div className="font-medium text-slate-700 group-hover:text-emerald-700">Log Mood</div>
                         <div className="text-sm text-slate-500">How are you feeling?</div>
                       </div>
                     </div>
                   </button>
                   
-                  <button className="w-full p-4 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 text-left hover:from-purple-100 hover:to-pink-100 transition-all duration-200 border border-purple-100 group">
+                  <button className="w-full p-4 rounded-2xl bg-slate-50 text-left hover:bg-slate-100 transition-all duration-200 border border-slate-100 group">
                     <div className="flex items-center gap-3">
                       <span className="text-xl">🎯</span>
                       <div>
-                        <div className="font-medium text-slate-700 group-hover:text-purple-700">Focus Session</div>
+                        <div className="font-medium text-slate-700 group-hover:text-slate-800">Focus Session</div>
                         <div className="text-sm text-slate-500">Start deep work</div>
                       </div>
                     </div>
@@ -705,6 +705,6 @@ function FocusFriendApp() {
       )}
     </div>
   );
-  }
-  
-  export default FocusFriendApp;
+}
+
+export default FocusFriendApp;
