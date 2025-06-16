@@ -4,7 +4,7 @@ import { signInWithGoogle, signInWithEmail, signUpWithEmail, signOut, onAuthStat
 
 // Color themes for gradients
 const gradientThemes = {
-  default: 'from-gray-50 to-gray-100'
+  default: 'from-slate-50 to-blue-50'
 };
 
 // Microsoft Outlook integration types
@@ -95,44 +95,41 @@ const AuthComponent: React.FC<{ onAuthSuccess: (user: User) => void }> = ({ onAu
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+      <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 w-full max-w-md border border-white/20">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">FocusFriend</h1>
-          <p className="text-gray-600">Your productivity companion</p>
+          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+            <span className="text-2xl text-white">🎯</span>
+          </div>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">FocusFriend</h1>
+          <p className="text-slate-600">Your productivity companion</p>
         </div>
 
         <form onSubmit={handleEmailAuth} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email
-            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-4 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 backdrop-blur-sm"
               placeholder="Enter your email"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Password
-            </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-4 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 backdrop-blur-sm"
               placeholder="Enter your password"
               required
             />
           </div>
 
           {error && (
-            <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-lg">
+            <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-2xl border border-red-100">
               {error}
             </div>
           )}
@@ -140,22 +137,22 @@ const AuthComponent: React.FC<{ onAuthSuccess: (user: User) => void }> = ({ onAu
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 text-white py-3 rounded-xl font-medium hover:bg-indigo-700 transition-colors disabled:opacity-50"
+            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 rounded-2xl font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 transform hover:scale-[1.02]"
           >
             {loading ? 'Please wait...' : (isSignUp ? 'Sign Up' : 'Sign In')}
           </button>
         </form>
 
         <div className="my-6 flex items-center">
-          <div className="flex-1 border-t border-gray-300"></div>
-          <span className="px-4 text-gray-500 text-sm">or</span>
-          <div className="flex-1 border-t border-gray-300"></div>
+          <div className="flex-1 border-t border-slate-200"></div>
+          <span className="px-4 text-slate-500 text-sm">or</span>
+          <div className="flex-1 border-t border-slate-200"></div>
         </div>
 
         <button
           onClick={handleGoogleSignIn}
           disabled={loading}
-          className="w-full bg-white border border-gray-300 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+          className="w-full bg-white border border-slate-200 text-slate-700 py-4 rounded-2xl font-medium hover:bg-slate-50 transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-3 transform hover:scale-[1.02]"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -169,7 +166,7 @@ const AuthComponent: React.FC<{ onAuthSuccess: (user: User) => void }> = ({ onAu
         <div className="mt-6 text-center">
           <button
             onClick={() => setIsSignUp(!isSignUp)}
-            className="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
+            className="text-blue-600 hover:text-blue-700 text-sm font-medium"
           >
             {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
           </button>
@@ -221,7 +218,7 @@ const FocusGame: React.FC<{ points: number; onGameEnd: (score: number) => void; 
     if (!gameContainer) return;
 
     const rect = gameContainer.getBoundingClientRect();
-    const targetSize = 40;
+    const targetSize = 60;
     const maxX = rect.width - targetSize;
     const maxY = rect.height - targetSize;
     const minX = targetSize;
@@ -244,7 +241,7 @@ const FocusGame: React.FC<{ points: number; onGameEnd: (score: number) => void; 
       Math.pow(clickX - targetPosition.x, 2) + Math.pow(clickY - targetPosition.y, 2)
     );
 
-    if (distance < 50) {
+    if (distance < 60) {
       const newHitCount = hitCount + 1;
       setHitCount(newHitCount);
       setShowPoints(true);
@@ -260,27 +257,27 @@ const FocusGame: React.FC<{ points: number; onGameEnd: (score: number) => void; 
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 flex flex-col items-center justify-center p-6">
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-purple-900 mb-4">Focus Clicker</h1>
-        <div className="grid grid-cols-3 gap-4 mb-4">
-          <div className="bg-white rounded-xl p-4 shadow-sm">
-            <div className="text-sm text-gray-600">Score</div>
-            <div className="text-2xl font-bold text-purple-700">{score}</div>
+        <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-6">Focus Clicker</h1>
+        <div className="grid grid-cols-3 gap-6 mb-8">
+          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20">
+            <div className="text-sm text-slate-600 font-medium">Score</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">{score}</div>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm">
-            <div className="text-sm text-gray-600">Time Left</div>
-            <div className="text-2xl font-bold text-purple-700">{timeLeft}s</div>
+          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20">
+            <div className="text-sm text-slate-600 font-medium">Time Left</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">{timeLeft}s</div>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm">
-            <div className="text-sm text-gray-600">High Score</div>
-            <div className="text-2xl font-bold text-purple-700">{highScore}</div>
+          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20">
+            <div className="text-sm text-slate-600 font-medium">High Score</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">{highScore}</div>
           </div>
         </div>
         {!gameActive && (
           <button
             onClick={startGame}
-            className="px-8 py-3 rounded-full bg-purple-600 text-white text-lg font-medium hover:bg-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+            className="px-10 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 text-white text-lg font-medium hover:from-purple-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg"
           >
             Start Game
           </button>
@@ -289,20 +286,20 @@ const FocusGame: React.FC<{ points: number; onGameEnd: (score: number) => void; 
 
       {gameActive && (
         <div
-          className="relative w-full h-[60vh] bg-white rounded-2xl shadow-lg overflow-hidden cursor-crosshair game-container"
+          className="relative w-full max-w-4xl h-[70vh] bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden cursor-crosshair game-container border border-white/20"
           onClick={handleContainerClick}
         >
           <div
-            className="absolute w-20 h-20 bg-purple-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 hover:scale-110"
+            className="absolute w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 hover:scale-110 shadow-lg"
             style={{
               left: targetPosition.x,
               top: targetPosition.y,
-              boxShadow: '0 0 20px rgba(139, 92, 246, 0.5)'
+              boxShadow: '0 0 30px rgba(139, 92, 246, 0.6)'
             }}
           />
           {showPoints && (
             <div
-              className="absolute text-2xl font-bold text-purple-600 animate-bounce"
+              className="absolute text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent animate-bounce"
               style={{
                 left: clickPosition.x,
                 top: clickPosition.y - 30,
@@ -315,17 +312,35 @@ const FocusGame: React.FC<{ points: number; onGameEnd: (score: number) => void; 
         </div>
       )}
 
-      <div className="mt-8 text-center">
-        <h2 className="text-xl font-semibold text-purple-900 mb-2">How to Play</h2>
-        <p className="text-gray-600 max-w-md">
-          Click the purple target as many times as you can in 30 seconds! 
-          Build up your combo to increase your multiplier and score more points. 
-          Your high score will be saved between sessions.
+      <div className="mt-8 text-center max-w-md">
+        <h2 className="text-xl font-semibold text-slate-700 mb-3">How to Play</h2>
+        <p className="text-slate-600 leading-relaxed">
+          Click the glowing target as many times as you can in 30 seconds! 
+          Build up your combo to increase your multiplier and score more points.
         </p>
       </div>
     </div>
   );
 };
+
+// Overview Card Component
+const OverviewCard: React.FC<{ title: string; children: React.ReactNode; className?: string }> = ({ title, children, className = "" }) => (
+  <div className={`bg-white/70 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20 ${className}`}>
+    <h3 className="text-lg font-semibold text-slate-700 mb-4">{title}</h3>
+    {children}
+  </div>
+);
+
+// Stat Card Component
+const StatCard: React.FC<{ icon: string; label: string; value: string | number; color: string }> = ({ icon, label, value, color }) => (
+  <div className={`bg-gradient-to-br ${color} rounded-2xl p-4 text-white`}>
+    <div className="flex items-center gap-3 mb-2">
+      <span className="text-2xl">{icon}</span>
+      <span className="text-sm font-medium opacity-90">{label}</span>
+    </div>
+    <div className="text-2xl font-bold">{value}</div>
+  </div>
+);
 
 // Main Focus Friend App
 function FocusFriendApp() {
@@ -344,28 +359,6 @@ function FocusFriendApp() {
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [isTimerActive, setIsTimerActive] = useState(false);
   const [timerMode, setTimerMode] = useState<'focus' | 'break'>('focus');
-  const [focusMinutes, setFocusMinutes] = useState(25);
-  const [breakMinutes, setBreakMinutes] = useState(5);
-
-  // Mood tracking state
-  const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([]);
-  const [selectedMood, setSelectedMood] = useState('');
-  const [selectedState, setSelectedState] = useState<'focused' | 'bored' | 'stressed' | 'neutral'>('neutral');
-  const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
-  const [moodNote, setMoodNote] = useState('');
-
-  // Focus session tracking
-  const [currentSession, setCurrentSession] = useState<FocusSession | null>(null);
-  const [isSessionActive, setIsSessionActive] = useState(false);
-  const [sessionHistory, setSessionHistory] = useState<FocusSession[]>([]);
-  const [lastUpdated, setLastUpdated] = useState(new Date());
-  const [showSessionComplete, setShowSessionComplete] = useState(false);
-  const [completedSession, setCompletedSession] = useState<FocusSession | null>(null);
-
-  // Schedule view state
-  const [viewMode, setViewMode] = useState<'daily' | 'weekly'>('daily');
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [weekOffset, setWeekOffset] = useState(0);
 
   // Game state
   const [gameScore, setGameScore] = useState(0);
@@ -398,6 +391,24 @@ function FocusFriendApp() {
     return () => unsubscribe();
   }, []);
 
+  // Timer effect
+  useEffect(() => {
+    if (isTimerActive && (timerMinutes > 0 || timerSeconds > 0)) {
+      const timer = setInterval(() => {
+        if (timerSeconds > 0) {
+          setTimerSeconds(timerSeconds - 1);
+        } else if (timerMinutes > 0) {
+          setTimerMinutes(timerMinutes - 1);
+          setTimerSeconds(59);
+        } else {
+          setIsTimerActive(false);
+          // Timer completed - could add notification here
+        }
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [isTimerActive, timerMinutes, timerSeconds]);
+
   // Handle authentication success
   const handleAuthSuccess = (authenticatedUser: User) => {
     setUser(authenticatedUser);
@@ -410,6 +421,45 @@ function FocusFriendApp() {
       setUser(null);
     } catch (error) {
       console.error('Error signing out:', error);
+    }
+  };
+
+  // Connect to Outlook
+  const connectToOutlook = async () => {
+    setIsConnecting(true);
+    setOutlookError(null);
+
+    try {
+      // Simulate Outlook connection - replace with actual Microsoft Graph API integration
+      setTimeout(() => {
+        setIsOutlookConnected(true);
+        setIsConnecting(false);
+        // Add some mock events
+        const mockEvents: OutlookEvent[] = [
+          {
+            id: '1',
+            title: 'Mathematics',
+            time: '09:00 - 10:00',
+            description: 'Algebra and Calculus',
+            isDoubleLesson: false,
+            startTime: new Date(),
+            endTime: new Date(Date.now() + 60 * 60 * 1000)
+          },
+          {
+            id: '2',
+            title: 'Physics',
+            time: '11:00 - 12:00',
+            description: 'Quantum Mechanics',
+            isDoubleLesson: false,
+            startTime: new Date(Date.now() + 2 * 60 * 60 * 1000),
+            endTime: new Date(Date.now() + 3 * 60 * 60 * 1000)
+          }
+        ];
+        setSchedule(mockEvents);
+      }, 2000);
+    } catch (error) {
+      setOutlookError('Failed to connect to Outlook');
+      setIsConnecting(false);
     }
   };
 
@@ -443,12 +493,18 @@ function FocusFriendApp() {
     return eventDate === today;
   }).sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
 
+  // Get next event
+  const nextEvent = todaySchedule.find(event => event.startTime > new Date());
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-indigo-600 mb-4">Loading FocusFriend...</h1>
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
+          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center animate-pulse">
+            <span className="text-2xl text-white">🎯</span>
+          </div>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">Loading FocusFriend...</h1>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
         </div>
       </div>
     );
@@ -459,31 +515,32 @@ function FocusFriendApp() {
   }
 
   return (
-    <div className={`min-h-screen ${gradientThemes.default}`}>
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900">FocusFriend</h1>
+    <div className={`min-h-screen bg-gradient-to-br ${gradientThemes.default}`}>
+      {/* Minimalist Header */}
+      <div className="bg-white/70 backdrop-blur-sm border-b border-white/20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <span className="text-lg text-white">🎯</span>
+              </div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">FocusFriend</h1>
             </div>
-            <div className="flex items-center space-x-4">
+            
+            <div className="flex items-center gap-4">
               <button
                 onClick={() => setCurrentView(currentView === 'main' ? 'game' : 'main')}
-                className="px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center space-x-2"
+                className="px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:from-purple-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center gap-2 font-medium"
               >
-                <span className="text-xl">🎮</span>
-                <span className="font-medium">
-                  {currentView === 'main' ? 'Play Game' : 'Back to Schedule'}
-                </span>
+                <span className="text-lg">{currentView === 'main' ? '🎮' : '📊'}</span>
+                <span>{currentView === 'main' ? 'Play Game' : 'Dashboard'}</span>
               </button>
-              <div className="border-l border-gray-200 pl-4 flex items-center gap-4">
-                <div className="text-sm text-gray-600">
-                  Welcome, {user.email}
-                </div>
+              
+              <div className="flex items-center gap-3 text-slate-600">
+                <span className="text-sm font-medium">{user.email?.split('@')[0]}</span>
                 <button
                   onClick={handleSignOut}
-                  className="px-4 py-2 rounded-full bg-gray-600 text-white hover:bg-gray-700 transition-all duration-200"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors duration-200 text-sm font-medium"
                 >
                   Sign Out
                 </button>
@@ -494,87 +551,94 @@ function FocusFriendApp() {
       </div>
 
       {currentView === 'main' ? (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main content area */}
-            <div className="lg:col-span-2 space-y-8">
-              {/* Schedule */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Schedule</h2>
-                <div className="space-y-3">
-                  {todaySchedule.length === 0 ? (
-                    <p className="text-gray-500 text-center py-8">
-                      No events scheduled for today. Connect your calendar to see your schedule!
-                    </p>
-                  ) : (
-                    todaySchedule.map((event) => (
-                      <div key={event.id} className="p-4 rounded-xl border border-gray-200 hover:bg-indigo-50/50 hover:border-indigo-100 transition-all duration-200">
-                        <div className="flex items-start gap-4">
-                          <div className="w-24 flex-shrink-0">
-                            <div className="font-medium text-gray-600">{event.time}</div>
-                          </div>
-                          <div className="flex-grow">
-                            <h4 className="font-medium text-gray-900">{event.title}</h4>
-                            {event.description && (
-                              <p className="text-sm mt-1 text-gray-600">{event.description}</p>
-                            )}
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+          {/* Overview Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            {/* Main Stats */}
+            <div className="lg:col-span-8">
+              <OverviewCard title="Today's Overview" className="mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <StatCard icon="🎯" label="Focus Points" value={rewardStats.focusPoints} color="from-blue-500 to-cyan-500" />
+                  <StatCard icon="🎮" label="Game Points" value={rewardStats.gamePoints} color="from-purple-500 to-pink-500" />
+                  <StatCard icon="😊" label="Mood Points" value={rewardStats.moodPoints} color="from-green-500 to-emerald-500" />
+                  <StatCard icon="⚡" label="Total Points" value={rewardStats.totalPoints} color="from-orange-500 to-red-500" />
+                </div>
+              </OverviewCard>
+
+              {/* Schedule Overview */}
+              <OverviewCard title="Today's Schedule">
+                {!isOutlookConnected ? (
+                  <div className="text-center py-8">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                      <span className="text-2xl">📅</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-slate-700 mb-2">Connect Your Calendar</h3>
+                    <p className="text-slate-600 mb-4">Sync with Outlook to see your schedule and track focus sessions</p>
+                    <button
+                      onClick={connectToOutlook}
+                      disabled={isConnecting}
+                      className="px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 font-medium"
+                    >
+                      {isConnecting ? 'Connecting...' : 'Connect to Outlook'}
+                    </button>
+                    {outlookError && (
+                      <p className="text-red-600 text-sm mt-2">{outlookError}</p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {nextEvent && (
+                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 border border-blue-100">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                          <span className="text-sm font-medium text-blue-700">Next Up</span>
+                        </div>
+                        <h4 className="font-semibold text-slate-800">{nextEvent.title}</h4>
+                        <p className="text-slate-600 text-sm">{nextEvent.time}</p>
+                      </div>
+                    )}
+                    
+                    {todaySchedule.length === 0 ? (
+                      <div className="text-center py-6 text-slate-500">
+                        <span className="text-4xl mb-2 block">🌅</span>
+                        <p>No more events today. Great job!</p>
+                      </div>
+                    ) : (
+                      todaySchedule.slice(0, 3).map((event) => (
+                        <div key={event.id} className="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition-colors duration-200">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <div className="flex-1">
+                            <h4 className="font-medium text-slate-800">{event.title}</h4>
+                            <p className="text-slate-600 text-sm">{event.time}</p>
                           </div>
                         </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
+                      ))
+                    )}
+                  </div>
+                )}
+              </OverviewCard>
             </div>
 
             {/* Sidebar */}
-            <div className="space-y-8">
-              {/* Reward Points */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Reward Points</h2>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-indigo-50 rounded-xl p-4">
-                      <div className="text-sm text-indigo-600 font-medium">Total Points</div>
-                      <div className="text-2xl font-bold text-indigo-700">{rewardStats.totalPoints}</div>
-                    </div>
-                    <div className="bg-green-50 rounded-xl p-4">
-                      <div className="text-sm text-green-600 font-medium">This Week</div>
-                      <div className="text-2xl font-bold text-green-700">{rewardStats.pointsThisWeek}</div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    <div className="bg-purple-50 rounded-lg p-2">
-                      <div className="text-xs text-purple-600">Game</div>
-                      <div className="text-lg font-bold text-purple-700">{rewardStats.gamePoints}</div>
-                    </div>
-                    <div className="bg-blue-50 rounded-lg p-2">
-                      <div className="text-xs text-blue-600">Focus</div>
-                      <div className="text-lg font-bold text-blue-700">{rewardStats.focusPoints}</div>
-                    </div>
-                    <div className="bg-yellow-50 rounded-lg p-2">
-                      <div className="text-xs text-yellow-600">Mood</div>
-                      <div className="text-lg font-bold text-yellow-700">{rewardStats.moodPoints}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+            <div className="lg:col-span-4 space-y-6">
+              
               {/* Focus Timer */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Focus Timer</h2>
+              <OverviewCard title="Focus Timer">
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-gray-900 mb-2">
+                  <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">
                     {String(timerMinutes).padStart(2, '0')}:{String(timerSeconds).padStart(2, '0')}
                   </div>
-                  <div className="text-sm text-gray-600 mb-4">
-                    {timerMode === 'focus' ? 'Focus Time' : 'Break Time'}
+                  <div className="text-sm text-slate-600 mb-4">
+                    {timerMode === 'focus' ? '🎯 Focus Time' : '☕ Break Time'}
                   </div>
                   <div className="flex gap-2 justify-center">
                     <button
                       onClick={() => setIsTimerActive(!isTimerActive)}
-                      className={`px-4 py-2 rounded-md text-white transition-colors duration-200 ${
-                        isTimerActive ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-green-600 hover:bg-green-700'
+                      className={`px-4 py-2 rounded-xl text-white transition-all duration-200 font-medium ${
+                        isTimerActive 
+                          ? 'bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600' 
+                          : 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600'
                       }`}
                     >
                       {isTimerActive ? 'Pause' : 'Start'}
@@ -582,32 +646,52 @@ function FocusFriendApp() {
                     <button
                       onClick={() => {
                         setIsTimerActive(false);
-                        setTimerMinutes(timerMode === 'focus' ? focusMinutes : breakMinutes);
+                        setTimerMinutes(25);
                         setTimerSeconds(0);
                       }}
-                      className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors duration-200"
+                      className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors duration-200 font-medium"
                     >
                       Reset
                     </button>
                   </div>
                 </div>
-              </div>
+              </OverviewCard>
 
               {/* Quick Actions */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
+              <OverviewCard title="Quick Actions">
                 <div className="space-y-3">
-                  <button className="w-full px-4 py-3 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors duration-200 text-left">
-                    📊 View Analytics
+                  <button className="w-full p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-purple-50 text-left hover:from-blue-100 hover:to-purple-100 transition-all duration-200 border border-blue-100 group">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl">📊</span>
+                      <div>
+                        <div className="font-medium text-slate-700 group-hover:text-blue-700">View Analytics</div>
+                        <div className="text-sm text-slate-500">Track your progress</div>
+                      </div>
+                    </div>
                   </button>
-                  <button className="w-full px-4 py-3 rounded-xl bg-green-50 text-green-700 hover:bg-green-100 transition-colors duration-200 text-left">
-                    📝 Add Mood Entry
+                  
+                  <button className="w-full p-4 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 text-left hover:from-green-100 hover:to-emerald-100 transition-all duration-200 border border-green-100 group">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl">😊</span>
+                      <div>
+                        <div className="font-medium text-slate-700 group-hover:text-green-700">Log Mood</div>
+                        <div className="text-sm text-slate-500">How are you feeling?</div>
+                      </div>
+                    </div>
                   </button>
-                  <button className="w-full px-4 py-3 rounded-xl bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors duration-200 text-left">
-                    🎯 Focus Session
+                  
+                  <button className="w-full p-4 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 text-left hover:from-purple-100 hover:to-pink-100 transition-all duration-200 border border-purple-100 group">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl">🎯</span>
+                      <div>
+                        <div className="font-medium text-slate-700 group-hover:text-purple-700">Focus Session</div>
+                        <div className="text-sm text-slate-500">Start deep work</div>
+                      </div>
+                    </div>
                   </button>
                 </div>
-              </div>
+              </OverviewCard>
+
             </div>
           </div>
         </div>
@@ -621,6 +705,6 @@ function FocusFriendApp() {
       )}
     </div>
   );
-}
-
-export default FocusFriendApp;
+  }
+  
+  export default FocusFriendApp;
